@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Ground
   - 
   - 
   - 
@@ -44,7 +44,10 @@ TagManager:
   - name: Background
     uniqueID: 2525070897
     locked: 0
-  - name: Player
+  - name: Bomber
+    uniqueID: 745857273
+    locked: 0
+  - name: Conquerer
     uniqueID: 530639491
     locked: 0
   - name: Foreground
