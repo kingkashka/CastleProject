@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - Climbables
   - Ground
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 2525070897
+    locked: 0
+  - name: Climbing
+    uniqueID: 203159959
     locked: 0
   - name: Bomber
     uniqueID: 745857273

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -6,11 +5,15 @@ public class Player : MonoBehaviour
 {
     [SerializeField] float runSpeed = 3f;
     [SerializeField] float jumpSpeed = 2f;
+    [SerializeField] float climbSpeed = 1.0f;
 
     Rigidbody2D myRigidBody;
     Animator myAnimator;
     BoxCollider2D myBoxCollider;
     PolygonCollider2D myPlayerFeet;
+    PolygonCollider2D myPlayersHands;
+
+    float startingGravityScale;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +22,9 @@ public class Player : MonoBehaviour
         myAnimator = GetComponent<Animator>();
         myBoxCollider = GetComponent<BoxCollider2D>();
         myPlayerFeet = GetComponent<PolygonCollider2D>();
+        myPlayersHands = GetComponent<PolygonCollider2D>();
+
+        startingGravityScale = myRigidBody.gravityScale;
     }
 
     // Update is called once per frame
@@ -27,8 +33,27 @@ public class Player : MonoBehaviour
         Run();
         IdleState();
         Jump();
+        Climb();
     }
+    private void Climb()
+    {
+        if (myBoxCollider.IsTouchingLayers(LayerMask.GetMask("Climbables")))
+        {
+            float controlThrow = CrossPlatformInputManager.GetAxis("Vertical");
+            Vector2 climbVelocity = new Vector2(myRigidBody.velocity.x, controlThrow * climbSpeed);
+            myRigidBody.velocity = climbVelocity;
 
+            myAnimator.SetBool("Climbing", true);
+
+            myRigidBody.gravityScale = 0f;
+        }
+        else
+        {
+            myAnimator.SetBool("Climbing", false);
+            myRigidBody.gravityScale = startingGravityScale;
+        }
+        
+    }
     private void Jump()
     {
 
