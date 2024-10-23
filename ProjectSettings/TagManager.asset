@@ -14,8 +14,8 @@ TagManager:
   - 
   - Climbables
   - Ground
-  - 
-  - 
+  - Player
+  - World Confiner
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: World Confiner
+    uniqueID: 729754515
+    locked: 0
   - name: Background
     uniqueID: 2525070897
     locked: 0
@@ -49,6 +52,9 @@ TagManager:
     locked: 0
   - name: Bomber
     uniqueID: 745857273
+    locked: 0
+  - name: Player
+    uniqueID: 1788451973
     locked: 0
   - name: Conquerer
     uniqueID: 530639491
