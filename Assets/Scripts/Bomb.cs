@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
+    [SerializeField] float radius = 3f;
+    [SerializeField] Vector2 explosionForce = new Vector2(200f, 100f);
     Animator bombAnimator;
     BoxCollider2D bombCollider;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +19,16 @@ public class Bomb : MonoBehaviour
     {
 
     }
+
+    void ExplodeBomb()
+    {
+       Collider2D playerCollider =  Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Player"));
+        if (playerCollider)
+        {
+            playerCollider.GetComponent<Rigidbody2D>().AddForce(explosionForce);
+            playerCollider.GetComponent<Player>().PlayerHit();
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         bombAnimator.SetTrigger("Explosion");
@@ -26,6 +39,10 @@ public class Bomb : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
 
 
 }
