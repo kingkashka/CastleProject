@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 public class EnemyPig : MonoBehaviour
 {
@@ -9,7 +7,6 @@ public class EnemyPig : MonoBehaviour
 
     Rigidbody2D pigRigidBody;
     Animator pigAnimator;
-
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +18,11 @@ public class EnemyPig : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        EnemyMovement();
+    }
+
+    private void EnemyMovement()
+    {
         if (isFacingLeft())
         {
             pigRigidBody.velocity = new Vector2(-pigRunSpeed, 0f);
@@ -44,22 +45,20 @@ public class EnemyPig : MonoBehaviour
     {
         return transform.localScale.x > 0f;
     }
-    
-    //private void idleState()
-    //{
-    //    bool runningSideways = Mathf.Abs(pigRigidBody.velocity.x) > Mathf.Epsilon;
-    //    if (!runningSideways)
-    //    {
-    //        pigAnimator.SetBool("Running", false);
-    //    }
-    //}
-    //private void Run()
-    //{
-    //    pigRigidBody.velocity = new Vector2(-pigRunSpeed, 0f);
-        
-    //    flipSprite();
 
-    //    pigAnimator.SetBool("Running", true);
-    //}
-    
+    public void PigDeath()
+    {
+        pigAnimator.SetTrigger("pigDeath");
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<CapsuleCollider2D>().enabled = false;
+        pigRigidBody.bodyType = RigidbodyType2D.Static;
+        StartCoroutine(destroyPig());
+    }
+
+    IEnumerator destroyPig()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
+    }
+
 }

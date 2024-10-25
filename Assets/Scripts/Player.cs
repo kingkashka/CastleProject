@@ -7,7 +7,10 @@ public class Player : MonoBehaviour
     [SerializeField] float runSpeed = 3f;
     [SerializeField] float jumpSpeed = 2f;
     [SerializeField] float climbSpeed = 1.0f;
+    [SerializeField] float attackRadius = 3f;
     [SerializeField] Vector2 hitKick = new Vector2(1f, 1f);
+    [SerializeField] Transform hurtBox;
+
 
     Rigidbody2D myRigidBody;
     Animator myAnimator;
@@ -17,7 +20,7 @@ public class Player : MonoBehaviour
 
 
     float startingGravityScale;
-    bool isHurting = false;
+    public bool isHurting = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +43,7 @@ public class Player : MonoBehaviour
             IdleState();
             Jump();
             Climb();
+            Attacking();
 
             if (myBoxCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
             {
@@ -47,6 +51,25 @@ public class Player : MonoBehaviour
             }
         }
 
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(hurtBox.position, attackRadius);
+    }
+    private void Attacking()
+    {
+        bool isAttacking = CrossPlatformInputManager.GetButtonDown("Fire1");
+        if (isAttacking)
+        {
+            myAnimator.SetTrigger("Attacking");
+            Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(hurtBox.position, attackRadius, LayerMask.GetMask("Enemy"));
+
+            foreach(Collider2D enemy in enemiesToHit)
+            {
+                enemy.GetComponent<EnemyPig>().PigDeath();
+            }
+        }
     }
 
     public void PlayerHit()
