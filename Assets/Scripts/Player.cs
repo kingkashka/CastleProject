@@ -58,13 +58,15 @@ public class Player : MonoBehaviour
     private void ExitLevel()
     {
         bool isTouching = myBoxCollider.IsTouchingLayers(LayerMask.GetMask("Doors"));
-        if (isTouching)
+        //if (isTouching)
+        //{
+        //    return;
+        //}
+        if(CrossPlatformInputManager.GetButtonDown("Vertical") && isTouching)
         {
-            return;
-        }
-        if(CrossPlatformInputManager.GetButtonDown("Vertical"))
-        {
+            myAnimator.SetBool("DoorEnter", true);
             FindObjectOfType<Doors>().LoadNextLevel();
+            myAnimator.SetBool("DoorEnter", false);
         }
     }
 

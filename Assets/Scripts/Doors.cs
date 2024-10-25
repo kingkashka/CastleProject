@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Doors : MonoBehaviour
 {
-    [SerializeField] float loadTime = 3f;
+    [SerializeField] float loadTime = 2f;
 
     Rigidbody2D DoorRigidBody;
     Animator DoorAnimator;
