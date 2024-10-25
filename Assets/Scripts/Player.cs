@@ -49,9 +49,25 @@ public class Player : MonoBehaviour
             {
                 PlayerHit();
             }
+
+            ExitLevel();
         }
 
     }
+
+    private void ExitLevel()
+    {
+        bool isTouching = myBoxCollider.IsTouchingLayers(LayerMask.GetMask("Doors"));
+        if (isTouching)
+        {
+            return;
+        }
+        if(CrossPlatformInputManager.GetButtonDown("Vertical"))
+        {
+            FindObjectOfType<Doors>().LoadNextLevel();
+        }
+    }
+
     //private void OpenCloseDoor()
     //{
     //    if (DoorCollider.IsTouchingLayers(LayerMask.GetMask("Player")))
@@ -76,7 +92,7 @@ public class Player : MonoBehaviour
             myAnimator.SetTrigger("Attacking");
             Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(hurtBox.position, attackRadius, LayerMask.GetMask("Enemy"));
 
-            foreach(Collider2D enemy in enemiesToHit)
+            foreach (Collider2D enemy in enemiesToHit)
             {
                 enemy.GetComponent<EnemyPig>().PigDeath();
             }

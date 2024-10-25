@@ -1,8 +1,12 @@
+using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 
 public class Doors : MonoBehaviour
 {
+    [SerializeField] float loadTime = 3f;
+
     Rigidbody2D DoorRigidBody;
     Animator DoorAnimator;
     BoxCollider2D DoorCollider;
@@ -21,19 +25,27 @@ public class Doors : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        OpenCloseDoor();
+        LoadNextLevel();
     }
 
-    private void OpenCloseDoor()
+    public void LoadNextLevel()
     {
         if (DoorCollider.IsTouchingLayers(LayerMask.GetMask("Player")))
         {
-            bool isInteractingWithDoor = CrossPlatformInputManager.GetButtonDown("Fire1");
+            bool isInteractingWithDoor = CrossPlatformInputManager.GetButtonDown("Vertical");
             if (isInteractingWithDoor)
             {
-                DoorAnimator.SetTrigger("DoorInteracting");
-                //GetComponent<Player>().myAnimator.SetTrigger("Door Enter");
+                DoorAnimator.SetTrigger("Open");
+                StartCoroutine(LoadLevel());
             }
         }
+    }
+
+    IEnumerator LoadLevel()
+    {
+        yield return new WaitForSeconds(loadTime);
+
+        var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex + 1);  
     }
 }
