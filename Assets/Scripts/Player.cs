@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
 
 
     Rigidbody2D myRigidBody;
-    Animator myAnimator;
+    public Animator myAnimator;
     BoxCollider2D myBoxCollider;
     PolygonCollider2D myPlayerFeet;
     PolygonCollider2D myPlayersHands;
@@ -52,6 +52,17 @@ public class Player : MonoBehaviour
         }
 
     }
+    //private void OpenCloseDoor()
+    //{
+    //    if (DoorCollider.IsTouchingLayers(LayerMask.GetMask("Player")))
+    //    {
+    //        bool isInteractingWithDoor = CrossPlatformInputManager.GetButtonDown("Fire1");
+    //        if (isInteractingWithDoor)
+    //        {
+    //            DoorAnimator.SetTrigger("DoorInteracting");
+    //        }
+    //    }
+    //}
 
     private void OnDrawGizmosSelected()
     {
