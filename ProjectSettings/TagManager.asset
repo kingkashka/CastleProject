@@ -19,7 +19,7 @@ TagManager:
   - Enemy
   - Bomb
   - Doors
-  - 
+  - Pickups
   - 
   - 
   - 
@@ -64,6 +64,9 @@ TagManager:
     locked: 0
   - name: Conquerer
     uniqueID: 530639491
+    locked: 0
+  - name: Pickups
+    uniqueID: 1843754833
     locked: 0
   - name: Bomb
     uniqueID: 2818936705
