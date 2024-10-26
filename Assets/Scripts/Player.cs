@@ -70,18 +70,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    //private void OpenCloseDoor()
-    //{
-    //    if (DoorCollider.IsTouchingLayers(LayerMask.GetMask("Player")))
-    //    {
-    //        bool isInteractingWithDoor = CrossPlatformInputManager.GetButtonDown("Fire1");
-    //        if (isInteractingWithDoor)
-    //        {
-    //            DoorAnimator.SetTrigger("DoorInteracting");
-    //        }
-    //    }
-    //}
-
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(hurtBox.position, attackRadius);
@@ -106,6 +95,7 @@ public class Player : MonoBehaviour
         myRigidBody.velocity = hitKick * new Vector2(-transform.localScale.x, 1f);
         myAnimator.SetTrigger("Hitting");
         isHurting = true;
+        FindObjectOfType<GameSession>().ProcessPlayerDeath();
         StartCoroutine(stopHurting());
     }
 
