@@ -4,6 +4,9 @@ public class Bomb : MonoBehaviour
 {
     [SerializeField] float radius = 3f;
     [SerializeField] Vector2 explosionForce = new Vector2(200f, 100f);
+    [SerializeField] AudioClip explosion;
+
+    AudioSource explosionSource;
     Animator bombAnimator;
     BoxCollider2D bombCollider;
     
@@ -12,6 +15,7 @@ public class Bomb : MonoBehaviour
     {
         bombCollider = GetComponent<BoxCollider2D>();
         bombAnimator = GetComponent<Animator>();
+        explosionSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -22,6 +26,8 @@ public class Bomb : MonoBehaviour
 
     void ExplodeBomb()
     {
+        playExplosionSFX();
+
        Collider2D playerCollider =  Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Player"));
         if (playerCollider)
         {
@@ -44,5 +50,9 @@ public class Bomb : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 
+    private void playExplosionSFX()
+    {
+        explosionSource.PlayOneShot(explosion);
 
+    }
 }

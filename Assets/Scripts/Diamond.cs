@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Diamond : MonoBehaviour
 {
+    [SerializeField] AudioClip diamondPickupSfx;
+
     Rigidbody diamondRigid;
     CapsuleCollider2D diamondBody;
     // Start is called before the first frame update
@@ -21,7 +23,10 @@ public class Diamond : MonoBehaviour
     {
         if (diamondBody.IsTouchingLayers(LayerMask.GetMask("Player")))
         {
+            AudioSource.PlayClipAtPoint(diamondPickupSfx, Camera.main.transform.position);
             Destroy(gameObject);
         }
     }
+
+     
 }

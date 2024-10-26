@@ -183,3 +183,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f455435afc0fc224d821955ac29cefc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diamondPickupSfx: {fileID: 8300000, guid: f1b1f0eacc83cbe498e6c589ef0272d7, type: 3}

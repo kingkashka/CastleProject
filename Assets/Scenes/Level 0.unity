@@ -18589,6 +18589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d2ce02a3543e245906c071ff7b422b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heartSFX: {fileID: 8300000, guid: e57ba45f8351d6c41be47d15f2ac809c, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -22081,6 +22082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 2
   explosionForce: {x: 10000, y: 0}
+  explosion: {fileID: 8300000, guid: e1a14695fbf5d7e41896b724961749ee, type: 3}
 --- !u!61 &1672520112
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22117,7 +22119,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2.1538463}
+    oldSize: {x: 2.6, y: 2.8}
     newSize: {x: 1.8571428, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
