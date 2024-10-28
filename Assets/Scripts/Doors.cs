@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 public class Doors : MonoBehaviour
 {
     [SerializeField] float loadTime = 2f;
+    [SerializeField] AudioClip openingDoorSFX, closingDoorSFX;
 
     Rigidbody2D DoorRigidBody;
     Animator DoorAnimator;
     BoxCollider2D DoorCollider;
+    AudioClip myAudioSource;
 
 
 
@@ -20,6 +22,7 @@ public class Doors : MonoBehaviour
         DoorRigidBody = GetComponent<Rigidbody2D>();
         DoorAnimator = GetComponent<Animator>();
         DoorCollider = GetComponent<BoxCollider2D>();
+        myAudioSource = GetComponent<AudioClip>();
     }
 
     // Update is called once per frame
@@ -35,7 +38,7 @@ public class Doors : MonoBehaviour
             bool isInteractingWithDoor = CrossPlatformInputManager.GetButtonDown("Vertical");
             if (isInteractingWithDoor)
             {
-                DoorAnimator.SetTrigger("Open");
+                DoorAnimator.SetTrigger("DoorEnter");
                 StartCoroutine(LoadLevel());
             }
         }
@@ -47,5 +50,14 @@ public class Doors : MonoBehaviour
 
         var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex + 1);  
+    }
+
+    void PlayOpeningSound()
+    {
+        AudioSource.PlayClipAtPoint(openingDoorSFX, Camera.main.transform.position);
+    }
+    void PlayClosingSound()
+    {
+        AudioSource.PlayClipAtPoint(closingDoorSFX, Camera.main.transform.position);
     }
 }

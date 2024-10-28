@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] float attackRadius = 3f;
     [SerializeField] Vector2 hitKick = new Vector2(1f, 1f);
     [SerializeField] Transform hurtBox;
+    [SerializeField] public AudioClip  jumpingSFX, attackingSFX, hittingSFX, deathSFX;
 
 
     Rigidbody2D myRigidBody;
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     BoxCollider2D myBoxCollider;
     PolygonCollider2D myPlayerFeet;
     PolygonCollider2D myPlayersHands;
+    AudioSource myAudioSource;
 
 
     float startingGravityScale;
@@ -30,8 +32,11 @@ public class Player : MonoBehaviour
         myBoxCollider = GetComponent<BoxCollider2D>();
         myPlayerFeet = GetComponent<PolygonCollider2D>();
         myPlayersHands = GetComponent<PolygonCollider2D>();
+        myAudioSource = GetComponent<AudioSource>();
 
         startingGravityScale = myRigidBody.gravityScale;
+
+        myAnimator.SetTrigger("DoorExit");
     }
 
     // Update is called once per frame
@@ -58,18 +63,25 @@ public class Player : MonoBehaviour
     private void ExitLevel()
     {
         bool isTouching = myBoxCollider.IsTouchingLayers(LayerMask.GetMask("Doors"));
-        //if (isTouching)
-        //{
-        //    return;
-        //}
-        if(CrossPlatformInputManager.GetButtonDown("Vertical") && isTouching)
+        if (isTouching)
         {
-            myAnimator.SetBool("DoorEnter", true);
+            return;
+        }
+        if (CrossPlatformInputManager.GetButtonDown("Vertical") && isTouching)
+        {
+            myAnimator.SetTrigger("DoorEnter");
             FindObjectOfType<Doors>().LoadNextLevel();
-            myAnimator.SetBool("DoorEnter", false);
         }
     }
-
+    public void LoadNextLevel()
+    {
+        FindObjectOfType<Doors>().LoadNextLevel();
+        turnOffRender();
+    }
+    public void turnOffRender()
+    {
+        GetComponent<SpriteRenderer>().enabled = false;
+    }
     
     private void OnDrawGizmosSelected()
     {
@@ -77,11 +89,12 @@ public class Player : MonoBehaviour
     }
     private void Attacking()
     {
-        bool isAttacking = CrossPlatformInputManager.GetButtonDown("Fire1");
+        bool isAttacking = CrossPlatformInputManager.GetButtonDown("Fire3");
         if (isAttacking)
         {
             myAnimator.SetTrigger("Attacking");
             Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(hurtBox.position, attackRadius, LayerMask.GetMask("Enemy"));
+            myAudioSource.PlayOneShot(attackingSFX);
 
             foreach (Collider2D enemy in enemiesToHit)
             {
@@ -92,9 +105,10 @@ public class Player : MonoBehaviour
 
     public void PlayerHit()
     {
-        myRigidBody.velocity = hitKick * new Vector2(-transform.localScale.x, 1f);
+        myRigidBody.velocity = hitKick * new Vector2(-transform.localScale.x, 5f);
         myAnimator.SetTrigger("Hitting");
         isHurting = true;
+        myAudioSource.PlayOneShot(hittingSFX);
         FindObjectOfType<GameSession>().ProcessPlayerDeath();
         StartCoroutine(stopHurting());
     }
@@ -131,11 +145,13 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        bool isJumping = CrossPlatformInputManager.GetButtonDown("Jump");
+        bool isJumping = CrossPlatformInputManager.GetButtonDown("Fire1");
         if (isJumping)
         {
             Vector2 jumpVelocity = new Vector2(myRigidBody.velocity.x, jumpSpeed);
             myRigidBody.velocity = jumpVelocity;
+
+            myAudioSource.PlayOneShot(jumpingSFX);
         }
     }
 

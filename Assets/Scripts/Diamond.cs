@@ -3,6 +3,7 @@ using UnityEngine;
 public class Diamond : MonoBehaviour
 {
     [SerializeField] AudioClip diamondPickupSfx;
+    [SerializeField] int diamondValue = 100;
 
     Rigidbody diamondRigid;
     CapsuleCollider2D diamondBody;
@@ -24,6 +25,7 @@ public class Diamond : MonoBehaviour
         if (diamondBody.IsTouchingLayers(LayerMask.GetMask("Player")))
         {
             AudioSource.PlayClipAtPoint(diamondPickupSfx, Camera.main.transform.position);
+            FindObjectOfType<GameSession>().addToScore(diamondValue);
             Destroy(gameObject);
         }
     }

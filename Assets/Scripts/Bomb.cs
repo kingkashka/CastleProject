@@ -4,18 +4,18 @@ public class Bomb : MonoBehaviour
 {
     [SerializeField] float radius = 3f;
     [SerializeField] Vector2 explosionForce = new Vector2(200f, 100f);
-    [SerializeField] AudioClip explosion;
+    [SerializeField] AudioClip bombSFX, burnSFX;
 
-    AudioSource explosionSource;
     Animator bombAnimator;
     BoxCollider2D bombCollider;
+    AudioSource myAudioSource;
     
     // Start is called before the first frame update
     void Start()
     {
         bombCollider = GetComponent<BoxCollider2D>();
         bombAnimator = GetComponent<Animator>();
-        explosionSource = GetComponent<AudioSource>();
+        myAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -26,8 +26,6 @@ public class Bomb : MonoBehaviour
 
     void ExplodeBomb()
     {
-        playExplosionSFX();
-
        Collider2D playerCollider =  Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Player"));
         if (playerCollider)
         {
@@ -38,21 +36,20 @@ public class Bomb : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         bombAnimator.SetTrigger("Explosion");
+        myAudioSource.PlayOneShot(burnSFX);
     }
 
     void DestroyBomb()
     {
         Destroy(gameObject);
     }
-
+    void bombSound()
+    {
+        myAudioSource.PlayOneShot(bombSFX);
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 
-    private void playExplosionSFX()
-    {
-        explosionSource.PlayOneShot(explosion);
-
-    }
 }
