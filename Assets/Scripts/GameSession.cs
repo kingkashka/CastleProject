@@ -8,6 +8,7 @@ public class GameSession : MonoBehaviour
 
     [SerializeField] Text scoreText, livesText;
     [SerializeField] AudioClip deathSFX;
+    [SerializeField] Image[] hearts;
 
     AudioSource audioSource;
     private void Awake()
@@ -50,6 +51,7 @@ public class GameSession : MonoBehaviour
     private void takeLife()
     {
         playerLives--;
+        updateHearts();
         livesText.text = playerLives.ToString();
     }
     public void addToScore(int scoreValue)
@@ -62,6 +64,28 @@ public class GameSession : MonoBehaviour
     public void addToLife()
     {
         playerLives++;
+
+        if (playerLives >= 3)
+        {
+            playerLives = 3;
+        }
+        updateHearts();
         livesText.text = playerLives.ToString();
+
+    }
+
+    private void updateHearts()
+    {
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            if (i < playerLives)
+            {
+                hearts[i].enabled = true;
+            }
+            else
+            {
+                hearts[i].enabled = false;
+            }
+        }
     }
 }
