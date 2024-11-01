@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class GameSession : MonoBehaviour
 {
     [SerializeField] int playerLives = 3, score = 0;
-
     [SerializeField] Text scoreText, livesText;
     [SerializeField] AudioClip deathSFX;
     [SerializeField] Image[] hearts;

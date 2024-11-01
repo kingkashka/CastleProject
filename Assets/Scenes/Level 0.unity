@@ -18766,10 +18766,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heart
       objectReference: {fileID: 0}
-    - target: {fileID: 6426814356324040515, guid: ea894529c122dbe44a869ea70cfc67d0, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6695512902273461537, guid: ea894529c122dbe44a869ea70cfc67d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.28
